@@ -1,11 +1,25 @@
 export default function SearchBar() {
   return (
-    <div className="w-full">
+    <div className="relative">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"
+        />
+      </svg>
+
       <input
         type="search"
-        placeholder="Search notes..."
-        className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-800 outline-none transition focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+        placeholder="Search notes by title or category..."
+        className="w-full rounded-xl border border-slate-200 bg-white py-4 pl-12 pr-4 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
       />
     </div>
   )
-}
+} 

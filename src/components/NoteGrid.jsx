@@ -5,39 +5,48 @@ export default function NoteGrid() {
     {
       id: 1,
       title: 'Study React',
-      description: 'Learn React components and props.',
+      description:
+        'Review React components, props and reusable component structure.',
       category: 'Study',
+      date: '22 June',
     },
     {
       id: 2,
-      title: 'Complete Project',
-      description: 'Finish the note taker homepage.',
+      title: 'Complete NoteTaker UI',
+      description:
+        'Finish the note cards, search bar and responsive grid layout.',
       category: 'Work',
+      date: '23 June',
     },
     {
       id: 3,
-      title: 'Buy Groceries',
-      description: 'Buy milk, bread and vegetables.',
+      title: 'Feed My Dog',
+      description:
+        'Give my dog food and replace the drinking water.',
       category: 'Personal',
+      date: '24 June',
     },
     {
       id: 4,
-      title: 'Prepare Presentation',
-      description: 'Create slides for the class presentation.',
+      title: 'Prepare Project Presentation',
+      description:
+        'Create slides explaining the NoteTaker components and design.',
       category: 'Study',
+      date: '25 June',
     },
   ]
 
   return (
-    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
       {notes.map((note) => (
         <NoteCard
           key={note.id}
           title={note.title}
           description={note.description}
           category={note.category}
+          date={note.date}
         />
       ))}
     </div>
   )
-}
+} 
