@@ -5,13 +5,15 @@ const categoryStyles = {
 }
 
 export default function NoteCard({
+  id,
   title,
-  description,
+  body,
   category,
   date,
+  onDelete,
 }) {
   return (
-    <article className="group flex min-h-64 flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg">
+    <article className="flex min-h-64 flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
       <div className="flex items-center justify-between gap-3">
         <span
           className={`rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${
@@ -27,23 +29,23 @@ export default function NoteCard({
         </span>
       </div>
 
-      <h2 className="mt-6 text-xl font-semibold leading-7 text-slate-900">
+      <h2 className="mt-6 text-xl font-semibold text-slate-900">
         {title}
       </h2>
 
       <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
-        {description}
+        {body}
       </p>
 
-      <button
-        type="button"
-        className="mt-6 inline-flex items-center gap-2 self-start text-sm font-semibold text-slate-700 transition group-hover:text-emerald-600"
-      >
-        View note
-        <span className="transition-transform group-hover:translate-x-1">
-          →
-        </span>
-      </button>
+      <div className="mt-6 border-t border-slate-100 pt-4">
+        <button
+          type="button"
+          onClick={() => onDelete(id)}
+          className="text-sm font-semibold text-rose-600 transition hover:text-rose-800"
+        >
+          Delete note
+        </button>
+      </div>
     </article>
   )
 } 

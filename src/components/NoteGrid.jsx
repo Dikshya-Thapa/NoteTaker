@@ -1,50 +1,31 @@
 import NoteCard from './NoteCard'
 
-export default function NoteGrid() {
-  const notes = [
-    {
-      id: 1,
-      title: 'Study React',
-      description:
-        'Review React components, props and reusable component structure.',
-      category: 'Study',
-      date: '22 June',
-    },
-    {
-      id: 2,
-      title: 'Complete NoteTaker UI',
-      description:
-        'Finish the note cards, search bar and responsive grid layout.',
-      category: 'Work',
-      date: '23 June',
-    },
-    {
-      id: 3,
-      title: 'Feed My Dog',
-      description:
-        'Give my dog food and replace the drinking water.',
-      category: 'Personal',
-      date: '24 June',
-    },
-    {
-      id: 4,
-      title: 'Prepare Project Presentation',
-      description:
-        'Create slides explaining the NoteTaker components and design.',
-      category: 'Study',
-      date: '25 June',
-    },
-  ]
+export default function NoteGrid({ notes, onDelete }) {
+  if (notes.length === 0) {
+    return (
+      <div className="rounded-xl border border-dashed border-slate-300 bg-white p-10 text-center">
+        <h3 className="font-semibold text-slate-800">
+          No notes found
+        </h3>
+
+        <p className="mt-1 text-sm text-slate-500">
+          Create a new note or try another search.
+        </p>
+      </div>
+    )
+  }
 
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
       {notes.map((note) => (
         <NoteCard
           key={note.id}
+          id={note.id}
           title={note.title}
-          description={note.description}
+          body={note.body}
           category={note.category}
           date={note.date}
+          onDelete={onDelete}
         />
       ))}
     </div>

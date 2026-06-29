@@ -1,4 +1,4 @@
-export default function SearchBar() {
+export default function SearchBar({ value, onChange }) {
   return (
     <div className="relative">
       <svg
@@ -17,8 +17,10 @@ export default function SearchBar() {
 
       <input
         type="search"
-        placeholder="Search notes by title or category..."
-        className="w-full rounded-xl border border-slate-200 bg-white py-4 pl-12 pr-4 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+        value={value}
+        onChange={onChange}
+        placeholder="Search notes by title..."
+        className="w-full rounded-xl border border-slate-200 bg-white py-4 pl-12 pr-4 text-sm shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
       />
     </div>
   )
