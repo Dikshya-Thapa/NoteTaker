@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import NewNotePage from './pages/NewNotePage'
 
@@ -37,10 +37,19 @@ const initialNotes = [
 export default function App() {
   const [notes, setNotes] = useState(initialNotes)
   const [searchText, setSearchText] = useState('')
+  const location = useLocation()
 
   useEffect(() => {
     console.log(`Current note count: ${notes.length}`)
   }, [notes])
+
+  useEffect(() => {
+    if (location.pathname === '/new-note') {
+      document.title = 'Create New Note | NoteTaker'
+    } else {
+      document.title = `NoteTaker | ${notes.length} notes`
+    }
+  }, [location.pathname, notes.length])
 
   function handleAddNote(noteData) {
     const newNote = {
