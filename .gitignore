@@ -32,4 +32,4 @@ dist-ssr/
 *.njsproj
 *.sln
 *.sw?
-'@ | Set-Content .gitignore
+'@ | Set-Content .gitignore 
