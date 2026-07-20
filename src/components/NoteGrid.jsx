@@ -19,8 +19,8 @@ export default function NoteGrid({ notes, onDelete }) {
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
       {notes.map((note) => (
         <NoteCard
-          key={note.id}
-          id={note.id}
+          key={note._id}
+          id={note._id}
           title={note.title}
           body={note.body}
           category={note.category}
