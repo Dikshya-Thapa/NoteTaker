@@ -2,42 +2,56 @@ import { useEffect, useState } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import NewNotePage from './pages/NewNotePage'
-
-const initialNotes = [
-  {
-    id: 1,
-    title: 'Study React',
-    body: 'Review React components, props and reusable component structure.',
-    category: 'Study',
-    date: '22 June',
-  },
-  {
-    id: 2,
-    title: 'Complete NoteTaker UI',
-    body: 'Finish the note cards, search bar and responsive grid layout.',
-    category: 'Work',
-    date: '23 June',
-  },
-  {
-    id: 3,
-    title: 'Feed My Dog',
-    body: 'Give my dog food and replace the drinking water.',
-    category: 'Personal',
-    date: '24 June',
-  },
-  {
-    id: 4,
-    title: 'Prepare Project Presentation',
-    body: 'Create slides explaining the NoteTaker components and design.',
-    category: 'Study',
-    date: '25 June',
-  },
-]
+import { createNote, deleteNote, getNotes } from './api/noteApi'
 
 export default function App() {
-  const [notes, setNotes] = useState(initialNotes)
+  const [notes, setNotes] = useState([])
   const [searchText, setSearchText] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [noteToDelete, setNoteToDelete] = useState(null)
+
+  const [message, setMessage] = useState({
+    type: '',
+    text: '',
+  })
+
   const location = useLocation()
+
+  function showMessage(type, text) {
+    setMessage({ type, text })
+
+    setTimeout(() => {
+      setMessage({ type: '', text: '' })
+    }, 3000)
+  }
+
+  useEffect(() => {
+    async function fetchNotes() {
+      try {
+        setIsLoading(true)
+
+        const response = await getNotes()
+
+        const notesData = Array.isArray(response)
+          ? response
+          : response.notes || []
+
+        setNotes(notesData)
+      } catch (error) {
+        console.log(error.response?.data || error.message)
+
+        showMessage(
+          'error',
+          error.response?.data?.message || 'Failed to load notes',
+        )
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchNotes()
+  }, [])
 
   useEffect(() => {
     console.log(`Current note count: ${notes.length}`)
@@ -51,46 +65,183 @@ export default function App() {
     }
   }, [location.pathname, notes.length])
 
-  function handleAddNote(noteData) {
-    const newNote = {
-      id: Date.now(),
-      ...noteData,
-      date: 'Today',
-    }
+  async function handleAddNote(noteData) {
+    try {
+      const notePayload = {
+        title: noteData.title,
+        body: noteData.body,
+        category: noteData.category || 'Personal',
+        date: noteData.date || 'Today',
+      }
 
-    setNotes((currentNotes) => [newNote, ...currentNotes])
+      console.log('Sending note:', notePayload)
+
+      const response = await createNote(notePayload)
+
+      const savedNote = response.note || response
+
+      setNotes((currentNotes) => [savedNote, ...currentNotes])
+
+      showMessage(
+        'success',
+        response.message || 'Note created successfully',
+      )
+
+      return savedNote
+    } catch (error) {
+      console.log(error.response?.data || error.message)
+
+      showMessage(
+        'error',
+        error.response?.data?.message || 'Failed to create note',
+      )
+
+      throw error
+    }
   }
 
   function handleDeleteNote(noteId) {
-    setNotes((currentNotes) =>
-      currentNotes.filter((note) => note.id !== noteId),
-    )
+    const selectedNote = notes.find((note) => note._id === noteId)
+
+    if (!selectedNote) {
+      showMessage('error', 'Note not found')
+      return
+    }
+
+    setNoteToDelete(selectedNote)
+  }
+
+  function handleCancelDelete() {
+    setNoteToDelete(null)
+  }
+
+  async function handleConfirmDelete() {
+    if (!noteToDelete) return
+
+    try {
+      setIsDeleting(true)
+
+      const response = await deleteNote(noteToDelete._id)
+
+      setNotes((currentNotes) =>
+        currentNotes.filter((note) => note._id !== noteToDelete._id),
+      )
+
+      setNoteToDelete(null)
+
+      showMessage(
+        'success',
+        response.message || 'Note deleted successfully',
+      )
+    } catch (error) {
+      console.log(error.response?.data || error.message)
+
+      showMessage(
+        'error',
+        error.response?.data?.message || 'Failed to delete note',
+      )
+    } finally {
+      setIsDeleting(false)
+    }
   }
 
   const filteredNotes = notes.filter((note) =>
-    note.title.toLowerCase().includes(searchText.toLowerCase()),
+    note.title?.toLowerCase().includes(searchText.toLowerCase()),
   )
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <HomePage
-            notes={filteredNotes}
-            searchText={searchText}
-            onSearchChange={setSearchText}
-            onDelete={handleDeleteNote}
-          />
-        }
-      />
+    <>
+      {message.text && (
+        <div
+          className={`fixed left-1/2 top-5 z-50 w-[90%] max-w-md -translate-x-1/2 rounded-xl px-5 py-4 text-sm font-semibold shadow-lg ${
+            message.type === 'success'
+              ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200'
+              : 'bg-red-50 text-red-700 ring-1 ring-red-200'
+          }`}
+        >
+          {message.text}
+        </div>
+      )}
 
-      <Route
-        path="/new-note"
-        element={<NewNotePage onSave={handleAddNote} />}
-      />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage
+              notes={filteredNotes}
+              isLoading={isLoading}
+              searchText={searchText}
+              onSearchChange={setSearchText}
+              onDelete={handleDeleteNote}
+            />
+          }
+        />
 
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        <Route
+          path="/new-note"
+          element={<NewNotePage onSave={handleAddNote} />}
+        />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+
+      {noteToDelete && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/50 px-4 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-red-600">
+              <svg
+                className="h-7 w-7"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M3 6h18" />
+                <path d="M8 6V4h8v2" />
+                <path d="M19 6l-1 14H6L5 6" />
+                <path d="M10 11v5" />
+                <path d="M14 11v5" />
+              </svg>
+            </div>
+
+            <div className="text-center">
+              <h2 className="text-xl font-bold text-slate-900">
+                Delete this note?
+              </h2>
+
+              <p className="mt-2 text-sm leading-6 text-slate-500">
+                Are you sure you want to delete{' '}
+                <span className="font-semibold text-slate-800">
+                  “{noteToDelete.title}”
+                </span>
+                ? This action cannot be undone.
+              </p>
+            </div>
+
+            <div className="mt-6 flex gap-3">
+              <button
+                type="button"
+                onClick={handleCancelDelete}
+                disabled={isDeleting}
+                className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                onClick={handleConfirmDelete}
+                disabled={isDeleting}
+                className="flex-1 rounded-xl bg-red-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isDeleting ? 'Deleting...' : 'Yes, delete'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 } 
