@@ -1,7 +1,23 @@
+import { Link } from 'react-router-dom'
+
 const categoryStyles = {
-  Personal: 'bg-rose-50 text-rose-700 ring-rose-200',
-  Work: 'bg-blue-50 text-blue-700 ring-blue-200',
-  Study: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+  Personal: {
+    card: 'bg-rose-50 ring-rose-200 hover:shadow-rose-200/70',
+    chip: 'bg-white/80 text-rose-700 ring-rose-200',
+  },
+  Work: {
+    card: 'bg-blue-50 ring-blue-200 hover:shadow-blue-200/70',
+    chip: 'bg-white/80 text-blue-700 ring-blue-200',
+  },
+  Study: {
+    card: 'bg-emerald-50 ring-emerald-200 hover:shadow-emerald-200/70',
+    chip: 'bg-white/80 text-emerald-700 ring-emerald-200',
+  },
+}
+
+const fallbackStyle = {
+  card: 'bg-slate-50 ring-slate-200 hover:shadow-slate-200/70',
+  chip: 'bg-white/80 text-slate-700 ring-slate-200',
 }
 
 export default function NoteCard({
@@ -12,39 +28,88 @@ export default function NoteCard({
   date,
   onDelete,
 }) {
+  const styles = categoryStyles[category] || fallbackStyle
+
   return (
-    <article className="flex min-h-64 flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+    <article
+      className={`flex min-h-64 flex-col rounded-2xl p-6 shadow-sm ring-1 transition duration-300 hover:-translate-y-1.5 hover:-rotate-1 hover:shadow-xl ${styles.card}`}
+    >
       <div className="flex items-center justify-between gap-3">
         <span
-          className={`rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${
-            categoryStyles[category] ||
-            'bg-slate-100 text-slate-700 ring-slate-200'
-          }`}
+          className={`rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${styles.chip}`}
         >
           {category}
         </span>
 
-        <span className="text-xs font-medium text-slate-400">
-          {date}
-        </span>
+        <div className="flex items-center">
+          <Link
+            to={`/edit-note/${id}`}
+            aria-label={`Edit note: ${title}`}
+            title="Edit note"
+            className="rounded-lg p-2 text-slate-400/70 transition hover:bg-white/80 hover:text-emerald-600"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-4.5 w-4.5"
+            >
+              <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+            </svg>
+          </Link>
+
+          <button
+          type="button"
+          onClick={() => onDelete(id)}
+          aria-label={`Delete note: ${title}`}
+          title="Delete note"
+          className="rounded-lg p-2 text-slate-400/70 transition hover:bg-white/80 hover:text-red-600"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-4.5 w-4.5"
+          >
+            <path d="M3 6h18" />
+            <path d="M8 6V4h8v2" />
+            <path d="M19 6l-1 14H6L5 6" />
+            <path d="M10 11v5" />
+            <path d="M14 11v5" />
+          </svg>
+          </button>
+        </div>
       </div>
 
-      <h2 className="mt-6 text-xl font-semibold text-slate-900">
+      <h2 className="mt-4 text-xl font-semibold leading-snug text-slate-900">
         {title}
       </h2>
 
-      <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
+      <p className="mt-2.5 flex-1 text-sm leading-6 text-slate-600 line-clamp-4">
         {body}
       </p>
 
-      <div className="mt-6 border-t border-slate-100 pt-4">
-        <button
-          type="button"
-          onClick={() => onDelete(id)}
-          className="text-sm font-semibold text-rose-600 transition hover:text-rose-800"
+      <div className="mt-5 flex items-center gap-1.5 border-t border-slate-900/10 pt-4 text-xs font-medium text-slate-500">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-3.5 w-3.5"
         >
-          Delete note
-        </button>
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <path d="M16 2v4M8 2v4M3 10h18" />
+        </svg>
+
+        {date}
       </div>
     </article>
   )
