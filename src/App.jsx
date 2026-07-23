@@ -2,12 +2,25 @@ import { useEffect, useState } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import NewNotePage from './pages/NewNotePage'
-import { createNote, deleteNote, getNotes } from './api/noteApi'
+import LandingPage from './pages/LandingPage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import EditNotePage from './pages/EditNotePage'
+import { createNote, deleteNote, getNotes, updateNote } from './api/noteApi'
+import { isLoggedIn } from './api/authApi'
+
+function ProtectedRoute({ children }) {
+  if (!isLoggedIn()) {
+    return <Navigate to="/login" replace />
+  }
+
+  return children
+}
 
 export default function App() {
   const [notes, setNotes] = useState([])
   const [searchText, setSearchText] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(() => isLoggedIn())
   const [isDeleting, setIsDeleting] = useState(false)
   const [noteToDelete, setNoteToDelete] = useState(null)
 
@@ -27,6 +40,17 @@ export default function App() {
   }
 
   useEffect(() => {
+    // Only fetch notes when logged in AND on a page that needs them.
+    // Fetching on every route change caused a race with note creation
+    // (the refetch could double-add the new note).
+    const needsNotes =
+      location.pathname === '/notes' ||
+      location.pathname.startsWith('/edit-note')
+
+    if (!isLoggedIn() || !needsNotes) {
+      return
+    }
+
     async function fetchNotes() {
       try {
         setIsLoading(true)
@@ -51,17 +75,25 @@ export default function App() {
     }
 
     fetchNotes()
-  }, [])
+  }, [location.pathname])
 
   useEffect(() => {
     console.log(`Current note count: ${notes.length}`)
   }, [notes])
 
   useEffect(() => {
-    if (location.pathname === '/new-note') {
+    if (location.pathname.startsWith('/edit-note')) {
+      document.title = 'Edit Note | NoteTaker'
+    } else if (location.pathname === '/new-note') {
       document.title = 'Create New Note | NoteTaker'
-    } else {
+    } else if (location.pathname === '/notes') {
       document.title = `NoteTaker | ${notes.length} notes`
+    } else if (location.pathname === '/login') {
+      document.title = 'Log in | NoteTaker'
+    } else if (location.pathname === '/register') {
+      document.title = 'Create account | NoteTaker'
+    } else {
+      document.title = 'NoteTaker — Every thought, pinned down'
     }
   }, [location.pathname, notes.length])
 
@@ -80,7 +112,11 @@ export default function App() {
 
       const savedNote = response.note || response
 
-      setNotes((currentNotes) => [savedNote, ...currentNotes])
+      // Dedupe by id so a refetch racing this update can't double-add
+      setNotes((currentNotes) => [
+        savedNote,
+        ...currentNotes.filter((note) => note._id !== savedNote._id),
+      ])
 
       showMessage(
         'success',
@@ -94,6 +130,32 @@ export default function App() {
       showMessage(
         'error',
         error.response?.data?.message || 'Failed to create note',
+      )
+
+      throw error
+    }
+  }
+
+  async function handleUpdateNote(id, noteData) {
+    try {
+      const response = await updateNote(id, noteData)
+
+      const savedNote = response.note || response
+
+      setNotes((currentNotes) =>
+        currentNotes.map((note) => (note._id === id ? savedNote : note)),
+      )
+
+      showMessage(
+        'success',
+        response.message || 'Note updated successfully',
+      )
+    } catch (error) {
+      console.log(error.response?.data || error.message)
+
+      showMessage(
+        'error',
+        error.response?.data?.message || 'Failed to update note',
       )
 
       throw error
@@ -164,22 +226,48 @@ export default function App() {
       )}
 
       <Routes>
+        <Route path="/" element={<LandingPage />} />
+
+        <Route path="/login" element={<LoginPage showMessage={showMessage} />} />
+
+        <Route path="/register" element={<RegisterPage showMessage={showMessage} />} />
+
         <Route
-          path="/"
+          path="/notes"
           element={
-            <HomePage
-              notes={filteredNotes}
-              isLoading={isLoading}
-              searchText={searchText}
-              onSearchChange={setSearchText}
-              onDelete={handleDeleteNote}
-            />
+            <ProtectedRoute>
+              <HomePage
+                showMessage={showMessage}
+                notes={filteredNotes}
+                isLoading={isLoading}
+                searchText={searchText}
+                onSearchChange={setSearchText}
+                onDelete={handleDeleteNote}
+              />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/new-note"
-          element={<NewNotePage onSave={handleAddNote} />}
+          element={
+            <ProtectedRoute>
+              <NewNotePage onSave={handleAddNote} />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/edit-note/:id"
+          element={
+            <ProtectedRoute>
+              <EditNotePage
+                notes={notes}
+                isLoading={isLoading}
+                onSave={handleUpdateNote}
+              />
+            </ProtectedRoute>
+          }
         />
 
         <Route path="*" element={<Navigate to="/" replace />} />
