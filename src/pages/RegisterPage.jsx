@@ -55,152 +55,166 @@ export default function RegisterPage({ showMessage }) {
 
   return (
     <main className="min-h-screen bg-slate-50 lg:grid lg:grid-cols-2">
+      {/* Form column */}
       <div className="flex min-h-screen items-center justify-center px-4 py-10">
         <div className="w-full max-w-md">
-        <Link to="/" className="mb-8 flex items-center justify-center gap-2.5">
-          <img src="/logo.png" alt="NoteTaker logo" className="h-10 w-10 rounded-full" />
-          <span className="font-display text-xl font-bold tracking-tight text-slate-950">
-            NoteTaker
-          </span>
-        </Link>
+          <Link to="/" className="mb-8 flex items-center justify-center gap-2.5">
+            <img
+              src="/logo.png"
+              alt="NoteTaker logo"
+              className="h-10 w-10 rounded-full"
+            />
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-          <h1 className="font-display text-2xl font-bold tracking-tight text-slate-950">
-            Create your account
-          </h1>
-
-          <p className="mt-1.5 text-sm text-slate-500">
-            Your first note is a minute away.
-          </p>
-
-          {error && (
-            <div
-              role="alert"
-              className="mt-5 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700 ring-1 ring-red-200"
-            >
-              {error}
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="mt-6 space-y-5" noValidate>
-            <div>
-              <label
-                htmlFor="name"
-                className="mb-1.5 block text-sm font-semibold text-slate-700"
-              >
-                Name
-              </label>
-
-              <input
-                id="name"
-                type="text"
-                autoComplete="name"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                placeholder="Your name"
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="email"
-                className="mb-1.5 block text-sm font-semibold text-slate-700"
-              >
-                Email
-              </label>
-
-              <input
-                id="email"
-                type="email"
-                autoComplete="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="you@example.com"
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="password"
-                className="mb-1.5 block text-sm font-semibold text-slate-700"
-              >
-                Password
-              </label>
-
-              <div className="relative">
-                            <input
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                autoComplete="new-password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="At least 6 characters"
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100" style={{ paddingRight: '3rem' }}
-              />
-
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((current) => !current)}
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
-                >
-                  {showPassword ? (
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-5 w-5"
-                    >
-                      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                      <circle cx="12" cy="12" r="3" />
-                    </svg>
-                  ) : (
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-5 w-5"
-                    >
-                      <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
-                      <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
-                      <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
-                      <path d="m2 2 20 20" />
-                    </svg>
-                  )}
-                </button>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full rounded-xl bg-emerald-600 px-4 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {isSubmitting ? 'Creating account...' : 'Create account'}
-            </button>
-          </form>
-        </div>
-
-        <p className="mt-6 text-center text-sm text-slate-600">
-          Already have an account?{' '}
-          <Link
-            to="/login"
-            className="font-semibold text-emerald-600 hover:text-emerald-700"
-          >
-            Log in
+            <span className="font-display text-xl font-bold tracking-tight text-slate-950">
+              NoteTaker
+            </span>
           </Link>
+
+         
+          <img
+            src="/auth-art.jpg"
+            alt="Illustration of colorful planner notes"
+            className="mb-6 h-36 w-full rounded-2xl object-cover shadow-md ring-1 ring-indigo-100 sm:h-44 lg:hidden"
+          />
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+            <h1 className="font-display text-2xl font-bold tracking-tight text-slate-950">
+              Create your account
+            </h1>
+
+            <p className="mt-1.5 text-sm text-slate-500">
+              Your first note is a minute away.
+            </p>
+
+            {error && (
+              <div
+                role="alert"
+                className="mt-5 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700 ring-1 ring-red-200"
+              >
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="mt-6 space-y-5" noValidate>
+              <div>
+                <label
+                  htmlFor="name"
+                  className="mb-1.5 block text-sm font-semibold text-slate-700"
+                >
+                  Name
+                </label>
+
+                <input
+                  id="name"
+                  type="text"
+                  autoComplete="name"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  placeholder="Your name"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-1.5 block text-sm font-semibold text-slate-700"
+                >
+                  Email
+                </label>
+
+                <input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  placeholder="you@example.com"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="password"
+                  className="mb-1.5 block text-sm font-semibold text-slate-700"
+                >
+                  Password
+                </label>
+
+                <div className="relative">
+                  <input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    autoComplete="new-password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    placeholder="At least 6 characters"
+                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-4 pr-12 text-sm shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((current) => !current)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+                  >
+                    {showPassword ? (
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="h-5 w-5"
+                      >
+                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                    ) : (
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="h-5 w-5"
+                      >
+                        <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                        <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                        <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                        <path d="m2 2 20 20" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full rounded-xl bg-emerald-600 px-4 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isSubmitting ? 'Creating account...' : 'Create account'}
+              </button>
+            </form>
+          </div>
+
+          <p className="mt-6 text-center text-sm text-slate-600">
+            Already have an account?{' '}
+            <Link
+              to="/login"
+              className="font-semibold text-emerald-600 hover:text-emerald-700"
+            >
+              Log in
+            </Link>
           </p>
         </div>
       </div>
 
+     
       <div className="relative hidden items-center justify-center overflow-hidden bg-indigo-50 p-12 lg:flex">
         <div
           aria-hidden="true"
