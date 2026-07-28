@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-
+const APIURL = import.meta.env.API_URL || 'https://notetaker-backend-dydl.onrender.com'
 
 const api = axios.create({
-  baseURL: 'https://notetaker-backend-dydl.onrender.com',
+  baseURL: APIURL,
   withCredentials: true,
 })
 
