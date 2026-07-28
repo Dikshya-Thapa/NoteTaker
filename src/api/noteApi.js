@@ -1,11 +1,13 @@
 import axios from 'axios'
 
+
+
 const api = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: 'https://notetaker-backend-dydl.onrender.com',
+  withCredentials: true,
 })
 
-// Attach the JWT (saved at login/register) to every request,
-// so the protected note routes (POST / PUT / DELETE) work.
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
 

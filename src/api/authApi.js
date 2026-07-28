@@ -1,7 +1,10 @@
 import axios from 'axios'
 
+const APIURL = import.meta.env.API_URL || 'https://notetaker-backend-dydl.onrender.com'
+
 const api = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: 'https://notetaker-backend-dydl.onrender.com',
+  withCredentials: true,
 })
 
 export async function registerUser(userData) {

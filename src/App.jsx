@@ -40,9 +40,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    // Only fetch notes when logged in AND on a page that needs them.
-    // Fetching on every route change caused a race with note creation
-    // (the refetch could double-add the new note).
+    
     const needsNotes =
       location.pathname === '/notes' ||
       location.pathname.startsWith('/edit-note')
@@ -112,7 +110,7 @@ export default function App() {
 
       const savedNote = response.note || response
 
-      // Dedupe by id so a refetch racing this update can't double-add
+      
       setNotes((currentNotes) => [
         savedNote,
         ...currentNotes.filter((note) => note._id !== savedNote._id),

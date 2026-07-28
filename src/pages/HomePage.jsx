@@ -28,6 +28,7 @@ export default function HomePage({
   const user = getStoredUser()
 
   const [activeCategory, setActiveCategory] = useState('All')
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
@@ -46,7 +47,7 @@ export default function HomePage({
     return notes.filter((note) => note.category === category).length
   }
 
-  function handleLogout() {
+  function handleConfirmLogout() {
     clearSession()
 
     showMessage?.('success', 'You have been logged out.')
@@ -84,7 +85,7 @@ export default function HomePage({
 
                 <button
                   type="button"
-                  onClick={handleLogout}
+                  onClick={() => setIsLoggingOut(true)}
                   className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
                 >
                   Log out
@@ -149,6 +150,58 @@ export default function HomePage({
           )}
         </section>
       </div>
+
+      {/* Logout confirmation */}
+      {isLoggingOut && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/50 px-4 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+              <svg
+                className="h-7 w-7"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <path d="m16 17 5-5-5-5" />
+                <path d="M21 12H9" />
+              </svg>
+            </div>
+
+            <div className="text-center">
+              <h2 className="text-xl font-bold text-slate-900">
+                Log out of NoteTaker?
+              </h2>
+
+              <p className="mt-2 text-sm leading-6 text-slate-500">
+                Your notes stay safe. You will need to log in again to open
+                your workspace.
+              </p>
+            </div>
+
+            <div className="mt-6 flex gap-3">
+              <button
+                type="button"
+                onClick={() => setIsLoggingOut(false)}
+                className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                Stay logged in
+              </button>
+
+              <button
+                type="button"
+                onClick={handleConfirmLogout}
+                className="flex-1 rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+              >
+                Yes, log out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 } 

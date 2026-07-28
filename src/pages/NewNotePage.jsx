@@ -39,7 +39,7 @@ export default function NewNotePage({ onSave }) {
 
       navigate('/notes')
     } catch {
-      // The toast in App.jsx already shows the error
+      
     } finally {
       setIsSaving(false)
     }

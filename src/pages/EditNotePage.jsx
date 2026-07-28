@@ -76,7 +76,7 @@ function EditNoteForm({ note, onSave }) {
 
       navigate('/notes')
     } catch {
-      // The toast in App.jsx already shows the error
+      
     } finally {
       setIsSaving(false)
     }

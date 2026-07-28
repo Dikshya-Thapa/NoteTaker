@@ -413,10 +413,7 @@ export default function LandingPage() {
 
               <div className="mt-6 space-y-5 leading-8 text-slate-600">
                 <p>
-                  Hi, I'm the developer behind NoteTaker. I built it because my
-                  own ideas kept ending up scattered across chat messages to
-                  myself, random text files, and the backs of old receipts —
-                  and I could never find any of them again when it mattered.
+                  Hi, I'm Dikshya Thapa, the developer behind NoteTaker. I built it because my own ideas kept ending up scattered across chat messages to myself, random text files, and the backs of old receipts and I could never find any of them again when it mattered.
                 </p>
 
                 <p>
@@ -430,7 +427,7 @@ export default function LandingPage() {
 
                 <p>
                   It's a small app on purpose. No subscriptions, no
-                  distractions, no feature bloat — just a dependable place for
+                  distractions, no feature bloat just a dependable place for
                   the things you don't want to forget.
                 </p>
               </div>
