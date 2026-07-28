@@ -9,6 +9,17 @@ import EditNotePage from './pages/EditNotePage'
 import { createNote, deleteNote, getNotes, updateNote } from './api/noteApi'
 import { isLoggedIn } from './api/authApi'
 
+
+function getErrorMessage(error, fallback) {
+  const data = error.response?.data
+
+  if (Array.isArray(data?.errors) && data.errors.length > 0) {
+    return data.errors.map((item) => item.message || item.msg).join(' ')
+  }
+
+  return data?.message || fallback
+}
+
 function ProtectedRoute({ children }) {
   if (!isLoggedIn()) {
     return <Navigate to="/login" replace />
@@ -63,10 +74,7 @@ export default function App() {
       } catch (error) {
         console.log(error.response?.data || error.message)
 
-        showMessage(
-          'error',
-          error.response?.data?.message || 'Failed to load notes',
-        )
+        showMessage('error', getErrorMessage(error, 'Failed to load notes'))
       } finally {
         setIsLoading(false)
       }
@@ -125,10 +133,7 @@ export default function App() {
     } catch (error) {
       console.log(error.response?.data || error.message)
 
-      showMessage(
-        'error',
-        error.response?.data?.message || 'Failed to create note',
-      )
+      showMessage('error', getErrorMessage(error, 'Failed to create note'))
 
       throw error
     }
@@ -151,10 +156,7 @@ export default function App() {
     } catch (error) {
       console.log(error.response?.data || error.message)
 
-      showMessage(
-        'error',
-        error.response?.data?.message || 'Failed to update note',
-      )
+      showMessage('error', getErrorMessage(error, 'Failed to update note'))
 
       throw error
     }
@@ -196,10 +198,7 @@ export default function App() {
     } catch (error) {
       console.log(error.response?.data || error.message)
 
-      showMessage(
-        'error',
-        error.response?.data?.message || 'Failed to delete note',
-      )
+      showMessage('error', getErrorMessage(error, 'Failed to delete note'))
     } finally {
       setIsDeleting(false)
     }
@@ -330,4 +329,4 @@ export default function App() {
       )}
     </>
   )
-} 
+}

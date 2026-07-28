@@ -44,7 +44,7 @@ export default function LoginPage({ showMessage }) {
 
   return (
     <main className="min-h-screen bg-slate-50 lg:grid lg:grid-cols-2">
-      <div className="flex min-h-screen items-center justify-center px-4 py-10">
+      <div className="flex min-h-screen items-center justify-center px-4 py-10 lg:py-10">
         <div className="w-full max-w-md">
         <Link to="/" className="mb-8 flex items-center justify-center gap-2.5">
           <img src="/logo.png" alt="NoteTaker logo" className="h-10 w-10 rounded-full" />
@@ -52,6 +52,13 @@ export default function LoginPage({ showMessage }) {
             NoteTaker
           </span>
         </Link>
+
+        
+        <img
+          src="/auth-art.jpg"
+          alt="Illustration of colorful planner notes"
+          className="mb-6 h-36 w-full rounded-2xl object-cover shadow-md ring-1 ring-indigo-100 sm:h-44 lg:hidden"
+        />
 
         <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
           <h1 className="font-display text-2xl font-bold tracking-tight text-slate-950">
@@ -205,4 +212,4 @@ export default function LoginPage({ showMessage }) {
       </div>
     </main>
   )
-} 
+}

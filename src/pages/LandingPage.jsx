@@ -99,10 +99,10 @@ export default function LandingPage() {
     <div className="min-h-screen scroll-smooth bg-slate-50 text-slate-900">
       {/* Navbar */}
       <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-slate-50/80 backdrop-blur">
-        <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-8">
+        <nav className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-y-2 px-4 py-3 sm:px-8 md:h-16 md:flex-nowrap md:py-0">
           <Logo />
 
-          <div className="hidden items-center gap-8 text-sm font-semibold text-slate-600 md:flex">
+          <div className="order-3 flex w-full items-center justify-center gap-6 text-sm font-semibold text-slate-600 md:order-none md:w-auto md:gap-8">
             <a href="#how-it-works" className="transition hover:text-slate-950">
               How it works
             </a>
@@ -413,7 +413,11 @@ export default function LandingPage() {
 
               <div className="mt-6 space-y-5 leading-8 text-slate-600">
                 <p>
-                  Hi, I'm Dikshya Thapa, the developer behind NoteTaker. I built it because my own ideas kept ending up scattered across chat messages to myself, random text files, and the backs of old receipts and I could never find any of them again when it mattered.
+                  Hi, I'm Dikshya Thapa, the developer behind NoteTaker. I
+                  built it because my own ideas kept ending up scattered across
+                  chat messages to myself, random text files, and the backs of
+                  old receipts — and I could never find any of them again when
+                  it mattered.
                 </p>
 
                 <p>
@@ -427,7 +431,7 @@ export default function LandingPage() {
 
                 <p>
                   It's a small app on purpose. No subscriptions, no
-                  distractions, no feature bloat just a dependable place for
+                  distractions, no feature bloat — just a dependable place for
                   the things you don't want to forget.
                 </p>
               </div>

@@ -8,7 +8,7 @@ export default function SearchBar({
   counts,
 }) {
   return (
-    <div className="flex items-stretch overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition focus-within:border-emerald-500 focus-within:ring-4 focus-within:ring-emerald-100">
+    <div className="flex flex-col items-stretch overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition focus-within:border-emerald-500 focus-within:ring-4 focus-within:ring-emerald-100 sm:flex-row">
       {/* Search input */}
       <div className="relative flex-1">
         <svg
@@ -36,7 +36,7 @@ export default function SearchBar({
 
       {/* Category filter, built into the bar */}
       {onCategoryChange && (
-        <label className="relative flex cursor-pointer select-none items-center gap-2 border-l border-slate-200 bg-slate-50/70 px-4 transition hover:bg-slate-100">
+        <label className="relative flex cursor-pointer select-none items-center gap-2 border-t border-slate-200 bg-slate-50/70 px-4 py-3 transition hover:bg-slate-100 sm:border-l sm:border-t-0 sm:py-0">
           <span className="text-sm font-medium text-slate-500">
             Categories:
           </span>
@@ -58,8 +58,7 @@ export default function SearchBar({
             </svg>
           </span>
 
-          {/* Invisible select stretched over the whole section, so a click
-              anywhere here opens the dropdown */}
+          
           <select
             value={category}
             onChange={(event) => onCategoryChange(event.target.value)}

@@ -46,7 +46,7 @@ export default function NoteCard({
             to={`/edit-note/${id}`}
             aria-label={`Edit note: ${title}`}
             title="Edit note"
-            className="rounded-lg p-2 text-slate-400/70 transition hover:bg-white/80 hover:text-emerald-600"
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-400/70 transition hover:bg-white/80 hover:text-emerald-600"
           >
             <svg
               viewBox="0 0 24 24"
@@ -66,7 +66,7 @@ export default function NoteCard({
           onClick={() => onDelete(id)}
           aria-label={`Delete note: ${title}`}
           title="Delete note"
-          className="rounded-lg p-2 text-slate-400/70 transition hover:bg-white/80 hover:text-red-600"
+          className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-400/70 transition hover:bg-white/80 hover:text-red-600"
         >
           <svg
             viewBox="0 0 24 24"

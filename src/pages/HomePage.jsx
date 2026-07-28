@@ -96,7 +96,7 @@ export default function HomePage({
             <img
               src="/auth-art.jpg"
               alt="Illustration of colorful planner notes"
-              className="hidden w-80 -rotate-2 rounded-2xl shadow-xl shadow-indigo-200 ring-1 ring-indigo-100 lg:block xl:w-96"
+              className="h-32 w-full -rotate-1 rounded-2xl object-cover shadow-xl shadow-indigo-200 ring-1 ring-indigo-100 sm:h-40 lg:h-auto lg:w-80 lg:-rotate-2 lg:object-contain xl:w-96"
             />
           </div>
         </section>
@@ -204,4 +204,4 @@ export default function HomePage({
       )}
     </main>
   )
-} 
+}
