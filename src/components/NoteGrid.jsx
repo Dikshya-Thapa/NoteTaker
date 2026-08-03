@@ -46,6 +46,7 @@ export default function NoteGrid({ notes, onDelete }) {
           body={note.body}
           category={note.category}
           date={note.date}
+          createdAt={note.createdAt}
           onDelete={onDelete}
         />
       ))}

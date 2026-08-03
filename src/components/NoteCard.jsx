@@ -1,5 +1,35 @@
 import { Link } from 'react-router-dom'
 
+
+function formatDate(createdAt, fallback) {
+  const parsed = new Date(createdAt)
+
+  if (!createdAt || Number.isNaN(parsed.getTime())) {
+    return fallback || 'Today'
+  }
+
+  const today = new Date()
+
+  if (parsed.toDateString() === today.toDateString()) {
+    return 'Today'
+  }
+
+  const yesterday = new Date(today)
+  yesterday.setDate(today.getDate() - 1)
+
+  if (parsed.toDateString() === yesterday.toDateString()) {
+    return 'Yesterday'
+  }
+
+  return parsed.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    ...(parsed.getFullYear() === today.getFullYear()
+      ? {}
+      : { year: 'numeric' }),
+  })
+}
+
 const categoryStyles = {
   Personal: {
     card: 'bg-rose-50 ring-rose-200 hover:shadow-rose-200/70',
@@ -26,6 +56,7 @@ export default function NoteCard({
   body,
   category,
   date,
+  createdAt,
   onDelete,
 }) {
   const styles = categoryStyles[category] || fallbackStyle
@@ -109,8 +140,8 @@ export default function NoteCard({
           <path d="M16 2v4M8 2v4M3 10h18" />
         </svg>
 
-        {date}
+        {formatDate(createdAt, date)}
       </div>
     </article>
   )
-} 
+}
