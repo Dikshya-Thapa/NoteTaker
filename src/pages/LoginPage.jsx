@@ -159,7 +159,7 @@ export default function LoginPage({ showMessage }) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full rounded-xl bg-slate-900 px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-slate-950 bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_2px_0_0_#020617] transition-all hover:bg-slate-800 active:translate-y-[2px] active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 py-3"
             >
               {isSubmitting ? 'Logging in...' : 'Log in'}
             </button>

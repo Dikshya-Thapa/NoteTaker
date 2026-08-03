@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import NewNoteButton from '../components/NewNoteButton'
 import NoteGrid from '../components/NoteGrid'
 import SearchBar from '../components/SearchBar'
-import { clearSession, getStoredUser } from '../api/authApi'
+import ChatAssistant from '../components/ChatAssistant'
+import { clearSession, getStoredUser, logoutUser } from '../api/authApi'
 
 const categories = ['All', 'Personal', 'Work', 'Study']
 
@@ -47,7 +48,14 @@ export default function HomePage({
     return notes.filter((note) => note.category === category).length
   }
 
-  function handleConfirmLogout() {
+  async function handleConfirmLogout() {
+    try {
+      
+      await logoutUser()
+    } catch {
+      
+    }
+
     clearSession()
 
     showMessage?.('success', 'You have been logged out.')
@@ -86,7 +94,7 @@ export default function HomePage({
                 <button
                   type="button"
                   onClick={() => setIsLoggingOut(true)}
-                  className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-[0_2px_0_0_#cbd5e1] transition-all hover:bg-slate-50 active:translate-y-[2px] active:shadow-none disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   Log out
                 </button>
@@ -151,6 +159,8 @@ export default function HomePage({
         </section>
       </div>
 
+      <ChatAssistant />
+
       {/* Logout confirmation */}
       {isLoggingOut && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/50 px-4 backdrop-blur-sm">
@@ -186,7 +196,7 @@ export default function HomePage({
               <button
                 type="button"
                 onClick={() => setIsLoggingOut(false)}
-                className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-[0_2px_0_0_#cbd5e1] transition-all hover:bg-slate-50 active:translate-y-[2px] active:shadow-none disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Stay logged in
               </button>
@@ -194,7 +204,7 @@ export default function HomePage({
               <button
                 type="button"
                 onClick={handleConfirmLogout}
-                className="flex-1 rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+                className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-slate-950 bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_2px_0_0_#020617] transition-all hover:bg-slate-800 active:translate-y-[2px] active:shadow-none disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Yes, log out
               </button>

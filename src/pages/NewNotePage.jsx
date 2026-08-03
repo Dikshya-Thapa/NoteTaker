@@ -135,7 +135,7 @@ export default function NewNotePage({ onSave }) {
             <div className="flex justify-end gap-3 border-t border-slate-200 pt-5">
               <Link
                 to="/notes"
-                className="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-[0_2px_0_0_#cbd5e1] transition-all hover:bg-slate-50 active:translate-y-[2px] active:shadow-none disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Cancel
               </Link>
@@ -143,7 +143,7 @@ export default function NewNotePage({ onSave }) {
               <button
                 type="submit"
                 disabled={isSaving}
-                className="rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-emerald-800 bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_2px_0_0_#065f46] transition-all hover:bg-emerald-500 active:translate-y-[2px] active:shadow-none disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSaving ? 'Saving...' : 'Save Note'}
               </button>

@@ -36,6 +36,13 @@ export function isLoggedIn() {
   return Boolean(localStorage.getItem('token'))
 }
 
+
+export async function logoutUser() {
+  const response = await api.post('/auth/logout')
+
+  return response.data
+} 
+
 export function clearSession() {
   localStorage.removeItem('token')
   localStorage.removeItem('user')

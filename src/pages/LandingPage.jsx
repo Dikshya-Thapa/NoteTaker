@@ -118,7 +118,7 @@ export default function LandingPage() {
             {loggedIn ? (
               <Link
                 to="/notes"
-                className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-950 bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_2px_0_0_#020617] transition-all hover:bg-slate-800 active:translate-y-[2px] active:shadow-none disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Open my notes
               </Link>
@@ -133,7 +133,7 @@ export default function LandingPage() {
 
                 <Link
                   to="/register"
-                  className="rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-emerald-800 bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_2px_0_0_#065f46] transition-all hover:bg-emerald-500 active:translate-y-[2px] active:shadow-none disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   Register
                 </Link>
@@ -187,14 +187,14 @@ export default function LandingPage() {
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link
                 to="/register"
-                className="rounded-xl bg-slate-900 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:bg-slate-700"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-950 bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_2px_0_0_#020617] transition-all hover:bg-slate-800 active:translate-y-[2px] active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 px-7 py-3"
               >
                 Get started — it's free
               </Link>
 
               <Link
                 to="/login"
-                className="rounded-xl border border-slate-300 bg-white px-7 py-3.5 text-sm font-semibold text-slate-800 transition hover:border-slate-400 hover:bg-slate-100"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-[0_2px_0_0_#cbd5e1] transition-all hover:bg-slate-50 active:translate-y-[2px] active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 px-7 py-3"
               >
                 I already have an account
               </Link>
@@ -264,7 +264,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* How it works */}
+      
       <section id="how-it-works" className="border-t border-slate-200 bg-slate-50 scroll-mt-16">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-8">
           <div className="max-w-xl">
@@ -363,7 +363,7 @@ export default function LandingPage() {
       <section id="about" className="border-t border-slate-200 bg-slate-50 scroll-mt-16">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-[auto_1fr] lg:gap-16">
-            {/* Photo — put your image at frontend/public/profile.jpg */}
+            
             <div className="relative mx-auto">
               <div
                 aria-hidden="true"
@@ -380,7 +380,7 @@ export default function LandingPage() {
                 }}
               />
 
-              {/* Fallback shown until profile.jpg exists */}
+             
               <div
                 style={{ display: 'none' }}
                 className="relative h-64 w-64 items-center justify-center rounded-3xl bg-slate-900 shadow-xl sm:h-72 sm:w-72"
@@ -401,7 +401,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Story */}
+          
             <div>
               <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
                 About NoteTaker
@@ -438,7 +438,7 @@ export default function LandingPage() {
 
               <Link
                 to="/register"
-                className="mt-8 inline-block rounded-xl bg-emerald-600 px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
+                className="mt-8 inline-flex items-center justify-center gap-2 rounded-lg border border-emerald-800 bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_2px_0_0_#065f46] transition-all hover:bg-emerald-500 active:translate-y-[2px] active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 px-7 py-3"
               >
                 Try it yourself
               </Link>
@@ -459,4 +459,4 @@ export default function LandingPage() {
       </footer>
     </div>
   )
-} 
+}

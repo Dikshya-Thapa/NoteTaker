@@ -70,7 +70,7 @@ export default function RegisterPage({ showMessage }) {
             </span>
           </Link>
 
-         
+          
           <img
             src="/auth-art.jpg"
             alt="Illustration of colorful planner notes"
@@ -195,7 +195,7 @@ export default function RegisterPage({ showMessage }) {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full rounded-xl bg-emerald-600 px-4 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-emerald-800 bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_2px_0_0_#065f46] transition-all hover:bg-emerald-500 active:translate-y-[2px] active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 py-3"
               >
                 {isSubmitting ? 'Creating account...' : 'Create account'}
               </button>
@@ -214,7 +214,7 @@ export default function RegisterPage({ showMessage }) {
         </div>
       </div>
 
-     
+      
       <div className="relative hidden items-center justify-center overflow-hidden bg-indigo-50 p-12 lg:flex">
         <div
           aria-hidden="true"
@@ -249,4 +249,4 @@ export default function RegisterPage({ showMessage }) {
       </div>
     </main>
   )
-} 
+}
